@@ -1,0 +1,100 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.9 Chrome/128.0.6613.186 Electron/32.2.5 Safari/537.36" version="26.0.9">
+  <diagram name="Page-1" id="dyLo5DY4QBNY6DBnyGOo">
+    <mxGraphModel dx="2693" dy="1987" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Application Architecture - DevOps CI/CD on AWS" style="text;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="-100" width="600" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="aws_cloud" value="AWS Cloud" style="swimlane;rounded=1;fillColor=#F3F3F3;strokeColor=#000000;fontSize=14;fontStyle=1;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_aws_cloud_alt;strokeColor=#232F3E;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#232F3E;dashed=0;" vertex="1" parent="1">
+          <mxGeometry x="-260" y="-120" width="1630" height="740" as="geometry" />
+        </mxCell>
+        <mxCell id="vpc" value="AWS VPC" style="swimlane;rounded=1;fillColor=#E1F3FF;strokeColor=#000000;fontSize=14;fontStyle=1;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_vpc;strokeColor=#B6BABF;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#B6BABF;dashed=0;" vertex="1" parent="aws_cloud">
+          <mxGeometry x="50.9375" y="52.85714285714286" width="1528.125" height="634.2857142857143" as="geometry" />
+        </mxCell>
+        <mxCell id="subnet" value="Public and Private Subnets" style="swimlane;rounded=1;fillColor=#C9E8FF;strokeColor=#000000;fontSize=14;fontStyle=1;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_subnet;strokeColor=#879196;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#879196;dashed=0;" vertex="1" parent="vpc">
+          <mxGeometry x="50.9375" y="52.85714285714286" width="1446.625" height="528.5714285714286" as="geometry" />
+        </mxCell>
+        <mxCell id="alb" value="AWS ALB (Load Balancer)" style="shape=hexagon;rounded=1;strokeColor=#000000;fillColor=#FFD966;fontSize=14;fontStyle=1;" vertex="1" parent="subnet">
+          <mxGeometry x="671.6473214285714" y="84.57142857142857" width="206.66071428571428" height="63.42857142857143" as="geometry" />
+        </mxCell>
+        <mxCell id="eks_cluster" value="AWS EKS Cluster (Kubernetes)" style="swimlane;rounded=1;fillColor=#D9EAD3;strokeColor=#000000;fontSize=14;fontStyle=1;" vertex="1" parent="subnet">
+          <mxGeometry x="170" y="190" width="966.63" height="317.43" as="geometry" />
+        </mxCell>
+        <mxCell id="worker_nodes" value="Worker Nodes (EC2 Instances)" style="swimlane;rounded=1;fillColor=#A4C2F4;strokeColor=#000000;fontSize=14;fontStyle=1;" vertex="1" parent="eks_cluster">
+          <mxGeometry x="51.66517857142857" y="52.85714285714286" width="723.3125" height="211.42857142857144" as="geometry" />
+        </mxCell>
+        <mxCell id="pods" value="Application Pods (Containers)" style="shape=rectangle;rounded=1;strokeColor=#000000;fillColor=#FFFFFF;fontSize=14;fontStyle=1;" vertex="1" parent="worker_nodes">
+          <mxGeometry x="103.33035714285714" y="84.57142857142857" width="516.6517857142857" height="84.57142857142857" as="geometry" />
+        </mxCell>
+        <mxCell id="Q3uhjebm26msI9709IFC-1" value="" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.ec2;fillColor=#F58534;gradientColor=none;" vertex="1" parent="worker_nodes">
+          <mxGeometry x="10.333035714285714" y="31.714285714285715" width="61.99821428571428" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="Q3uhjebm26msI9709IFC-2" value="" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.ec2;fillColor=#F58534;gradientColor=none;" vertex="1" parent="worker_nodes">
+          <mxGeometry x="20.666071428571428" y="111" width="61.99821428571428" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="Q3uhjebm26msI9709IFC-8" value="Internsheep JobApp Web Application" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="worker_nodes">
+          <mxGeometry x="286.47" y="41.14" width="233.53" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Q3uhjebm26msI9709IFC-15" value="" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.ecr_registry;fillColor=#F58534;gradientColor=none;" vertex="1" parent="worker_nodes">
+          <mxGeometry x="176.46" y="89.13999999999999" width="63.54" height="75.43" as="geometry" />
+        </mxCell>
+        <mxCell id="jenkins" value="Jenkins CI/CD" style="shape=rectangle;rounded=1;strokeColor=#000000;fillColor=#FFB6C1;fontSize=14;fontStyle=1;" vertex="1" parent="subnet">
+          <mxGeometry x="1188.299107142857" y="264.2857142857143" width="206.66071428571428" height="63.42857142857143" as="geometry" />
+        </mxCell>
+        <mxCell id="terraform" value="Terraform (Infrastructure as Code)" style="shape=rectangle;rounded=1;strokeColor=#000000;fillColor=#F4CCCC;fontSize=14;fontStyle=1;" vertex="1" parent="subnet">
+          <mxGeometry x="1188.299107142857" y="190.28571428571428" width="206.66071428571428" height="63.42857142857143" as="geometry" />
+        </mxCell>
+        <mxCell id="ansible" value="Ansible (Configuration Management)" style="shape=rectangle;rounded=1;strokeColor=#000000;fillColor=#C9DAF8;fontSize=14;fontStyle=1;" vertex="1" parent="subnet">
+          <mxGeometry x="1188.299107142857" y="338.2857142857143" width="206.66071428571428" height="63.42857142857143" as="geometry" />
+        </mxCell>
+        <mxCell id="monitoring" value="Monitoring (Prometheus and Grafana)" style="shape=rectangle;rounded=1;strokeColor=#000000;fillColor=#B4A7D6;fontSize=14;fontStyle=1;" vertex="1" parent="subnet">
+          <mxGeometry x="1188.299107142857" y="412.2857142857143" width="206.66071428571428" height="63.42857142857143" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow1" style="edgeStyle=elbowEdgeStyle;rounded=1;strokeColor=#000000;" edge="1" parent="subnet" source="alb" target="pods">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow2" style="edgeStyle=elbowEdgeStyle;rounded=1;strokeColor=#000000;" edge="1" parent="subnet" source="jenkins" target="pods">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow3" style="edgeStyle=elbowEdgeStyle;rounded=1;strokeColor=#000000;" edge="1" parent="subnet" source="terraform" target="eks_cluster">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow4" style="edgeStyle=elbowEdgeStyle;rounded=1;strokeColor=#000000;" edge="1" parent="subnet" source="ansible" target="worker_nodes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow5" style="edgeStyle=elbowEdgeStyle;rounded=1;strokeColor=#000000;" edge="1" parent="subnet" source="monitoring" target="pods">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Q3uhjebm26msI9709IFC-3" value="" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.application_load_balancer;" vertex="1" parent="subnet">
+          <mxGeometry x="741.82" y="14.29" width="66.31" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="Q3uhjebm26msI9709IFC-4" value="" style="shape=image;image=https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg;" vertex="1" parent="subnet">
+          <mxGeometry x="1406.625" y="200.85714285714286" width="40" height="42.285714285714285" as="geometry" />
+        </mxCell>
+        <mxCell id="Q3uhjebm26msI9709IFC-5" value="" style="shape=image;image=https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ansible/ansible-original.svg;" vertex="1" parent="subnet">
+          <mxGeometry x="1418.125" y="348.8571428571429" width="40" height="42.285714285714285" as="geometry" />
+        </mxCell>
+        <mxCell id="Q3uhjebm26msI9709IFC-6" value="" style="shape=image;image=https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prometheus/prometheus-original.svg;" vertex="1" parent="subnet">
+          <mxGeometry x="1238.125" y="454.57142857142856" width="40" height="42.285714285714285" as="geometry" />
+        </mxCell>
+        <mxCell id="Q3uhjebm26msI9709IFC-7" value="" style="shape=image;image=https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg;" vertex="1" parent="subnet">
+          <mxGeometry x="1288.125" y="454.57142857142856" width="40" height="42.285714285714285" as="geometry" />
+        </mxCell>
+        <mxCell id="Q3uhjebm26msI9709IFC-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Q3uhjebm26msI9709IFC-9" target="Q3uhjebm26msI9709IFC-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Q3uhjebm26msI9709IFC-9" value="End User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="-580" y="210" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Q3uhjebm26msI9709IFC-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="Q3uhjebm26msI9709IFC-10" target="alb">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Q3uhjebm26msI9709IFC-10" value="" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.route_53;fillColor=#F58536;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="-450" y="200" width="70" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
