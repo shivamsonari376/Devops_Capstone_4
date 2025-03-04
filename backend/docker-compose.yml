@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    networks:
+      - app-network
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper
+    networks:
+      - app-network
+
+  authservice:
+    build:
+      context: ./authService
+      dockerfile: Dockerfile
+    container_name: authservice
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - kafka
+    networks:
+      - app-network
+
+  userservice:
+    build:
+      context: ./userService
+      dockerfile: Dockerfile
+    container_name: userservice
+    ports:
+      - "5001:5001"
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - kafka
+    networks:
+      - app-network
+
+  companyservice:
+    build:
+      context: ./companyService
+      dockerfile: Dockerfile
+    container_name: companyservice
+    ports:
+      - "5002:5002"
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - kafka
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
