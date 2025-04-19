@@ -1,0 +1,81 @@
+properties([
+    parameters([
+        string(
+            defaultValue: 'dev',
+            name: 'Environment'
+        ),
+        choice(
+            choices: ['plan', 'apply', 'destroy'], 
+            name: 'Terraform_Action'
+        )
+    ])
+])
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Preparing') {
+            steps {
+                sh 'echo Preparing'
+            }
+        }
+
+        stage('Git Pulling') {
+            steps {
+                git branch: 'main', url: 'https://github.com/shivamsonari376/EKS-Terraform-GitHub-Actions.git'
+            }
+        }
+
+        stage('Check Terraform Availability') {
+            steps {
+                script {
+                    // Check if terraform is in PATH
+                    def terraformCheck = sh(script: 'which terraform || echo "Terraform not found"', returnStdout: true).trim()
+                    if (terraformCheck == "Terraform not found") {
+                        error "Terraform is not installed or not found in the PATH"
+                    } else {
+                        echo "Terraform is available at: ${terraformCheck}"
+                    }
+                }
+            }
+        }
+
+        stage('Init') {
+            steps {
+                withAWS(credentials: 'f2d1f8c6-18f6-4ff1-a19d-ca2d82f6b590', region: 'us-east-1') {
+                    // Explicitly add /usr/local/bin to PATH for this session
+                    sh 'export PATH=$PATH:/usr/local/bin && terraform -chdir=eks/ init -lock=false'
+                }
+            }
+        }
+
+        stage('Validate') {
+            steps {
+                withAWS(credentials: 'f2d1f8c6-18f6-4ff1-a19d-ca2d82f6b590', region: 'us-east-1') {
+                    // Explicitly add /usr/local/bin to PATH for this session
+                    sh 'export PATH=$PATH:/usr/local/bin && terraform -chdir=eks/ validate'
+                }
+            }
+        }
+
+        stage('Action') {
+            steps {
+                withAWS(credentials: 'f2d1f8c6-18f6-4ff1-a19d-ca2d82f6b590', region: 'us-east-1') {
+                    script {
+                        // Explicitly add /usr/local/bin to PATH for this session
+                        if (params.Terraform_Action == 'plan') {
+                            sh "export PATH=$PATH:/usr/local/bin && terraform -chdir=eks/ plan -var-file=${params.Environment}.tfvars -lock=false"
+                        } else if (params.Terraform_Action == 'apply') {
+                            sh "export PATH=$PATH:/usr/local/bin && terraform -chdir=eks/ apply -var-file=${params.Environment}.tfvars -auto-approve -lock=false"
+                        } else if (params.Terraform_Action == 'destroy') {
+                            sh "export PATH=$PATH:/usr/local/bin && terraform -chdir=eks/ destroy -var-file=${params.Environment}.tfvars -auto-approve -lock=false"
+                        } else {
+                            error "Invalid value for Terraform_Action: ${params.Terraform_Action}"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

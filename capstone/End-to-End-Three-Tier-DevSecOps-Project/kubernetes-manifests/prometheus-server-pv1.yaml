@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: prometheus-server-pv
+spec:
+  capacity:
+    storage: 10Gi  # You can adjust this size based on your EBS volume
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain  # Adjust as needed (Retain, Recycle, or Delete)
+  storageClassName: gp2  # EBS volumes in AWS use this storage class
+  awsElasticBlockStore:
+    volumeID: vol-08e671fa35fceacfa  # Your EBS Volume ID
+    fsType: ext4  # Specify file system type, default is ext4
+

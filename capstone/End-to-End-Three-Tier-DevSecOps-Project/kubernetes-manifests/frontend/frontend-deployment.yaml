@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: three-tier
+  labels:
+    role: frontend
+    env: demo
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 25%
+  selector:
+    matchLabels:
+      role: frontend
+  template:
+    metadata:
+      labels:
+        role: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: ankitsonari376/my-node-app-frontend:latest
+        imagePullPolicy: Always
+        env:
+          # Update this to point to your ALB's DNS address
+          - name: REACT_APP_BACKEND_URL
+            value: "http://k8s-threetie-mainlb-11c5700e30-1368714874.us-east-1.elb.amazonaws.com/api/tasks"
+        ports:
+        - containerPort: 3000
+

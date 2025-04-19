@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: prometheus-alertmanager-pv
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: gp2  # You can change this if needed to match your PVC's storage class
+  volumeMode: Filesystem
+  hostPath:
+    path: /data/prometheus-alertmanager  # Change this to the path where you want to store the data on the host machine
+    type: DirectoryOrCreate
+
