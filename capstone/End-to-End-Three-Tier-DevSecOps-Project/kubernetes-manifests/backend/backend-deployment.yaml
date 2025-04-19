@@ -28,7 +28,7 @@ spec:
         imagePullPolicy: Always
         env:
           - name: MONGO_CONN_STR
-            value: "mongodb+srv://shivamsonari376:RLiW8WDeLKttZBPn@cluster0.4grys.mongodb.net/bluegreen"
+            value: "mongodb+srv://<monog-db-connection-str>"
         ports:
         - containerPort: 3500
         livenessProbe:
